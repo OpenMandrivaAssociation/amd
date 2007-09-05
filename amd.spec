@@ -1,19 +1,20 @@
 %define name	amd
 %define NAME	AMD
-%define version	1.2
-%define release	%mkrel 3
+%define version	2.2.0
+%define release	%mkrel 1
 %define major	%{version}
 %define libname	%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
 
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Summary:	Approximate minimum degree ordering
 Group:		System/Libraries
-License:		LGPL
+License:	LGPL
 URL:		http://www.cise.ufl.edu/research/sparse/amd/
-Source0:	http://www.cise.ufl.edu/research/sparse/amd/v%{version}/%{NAME}.tar.bz2
-Source1:	http://www.cise.ufl.edu/research/sparse/ufconfig/v1.0/UFconfig.tar.bz2
+Source0:	http://www.cise.ufl.edu/research/sparse/amd/%{NAME}-%{version}.tar.gz
+Source1:	http://www.cise.ufl.edu/research/sparse/UFconfig/UFconfig-3.0.0.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
@@ -29,14 +30,14 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/Other
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%{mklibname %name 1.2 -d}
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
@@ -46,13 +47,14 @@ applications which will use %{name}.
 %setup -q -D -T -n %{name}-%{version}/%{NAME}
 
 %build
-cd Source
-    %{__make} -f Makefile CFLAGS="$RPM_OPT_FLAGS -fPIC" 
+cd Lib
+    %{__make} -f GNUmakefile CFLAGS="$RPM_OPT_FLAGS -fPIC" 
     gcc -shared -Wl,-soname,libamd.so.%{major} -o ../Lib/libamd.so.%{version} `ls *.o`
 cd ..
 cd Doc
     %{__make}
 cd ..
+
 
 %install
 rm -rf %{buildroot}
@@ -64,7 +66,9 @@ install -m 644 Lib/libamd.a %{buildroot}%{_libdir}
 
 install -d -m 755 %{buildroot}%{_includedir}
 install -m 644 Include/*.h %{buildroot}%{_includedir}
-install -m 644 Source/*.h %{buildroot}%{_includedir}
+
+install -d -m 755 %{buildroot}%{_docdir}/%{name}
+install -m 644 README.txt Doc/AMD_UserGuide.pdf %{buildroot}%{_docdir}/%{name}
 
 %clean
 rm -rf %{buildroot}
@@ -75,12 +79,11 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
+%{_docdir}/%{name}
 %{_libdir}/*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
-%doc README.txt Doc/AMD_UserGuide.pdf
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/*.a
-
