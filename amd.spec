@@ -15,6 +15,7 @@ License:	LGPL
 URL:		http://www.cise.ufl.edu/research/sparse/amd/
 Source0:	http://www.cise.ufl.edu/research/sparse/amd/%{NAME}-%{version}.tar.gz
 Source1:	http://www.cise.ufl.edu/research/sparse/UFconfig/UFconfig-3.0.0.tar.gz
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 AMD is a set of routines for ordering a sparse matrix prior to Cholesky
