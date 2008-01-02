@@ -3,7 +3,7 @@
 %define name		amd
 %define NAME		AMD
 %define version		2.2.0
-%define release		%mkrel 4
+%define release		%mkrel 5
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -27,8 +27,6 @@ Cholesky factorization (or LU factorization with diagonal pivoting).
 Summary:	Library of routines for permuting sparse matricies prior to factorization
 Group:		System/Libraries
 Provides:	%{libname} = %{epoch}:%{version}-%{release}
-Obsoletes:	%mklibname %{name} 1.2
-Obsoletes:	%mklibname %{name} 2
 
 %description -n %{libname}
 AMD provides a set of routines for permuting sparse matricies prior to
