@@ -3,7 +3,7 @@
 %define name		amd
 %define NAME		AMD
 %define version		2.2.0
-%define release		%mkrel 5
+%define release		%mkrel 6
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
@@ -93,11 +93,11 @@ done
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_docdir}/%{name}
 %attr(755,root,root) %{_libdir}/*.so.*
 
 %files -n %{develname}
 %defattr(-,root,root)
+%{_docdir}/%{name}
 %{_includedir}/suitesparse/*.h
 %{_libdir}/*.so
 %{_libdir}/*.a
