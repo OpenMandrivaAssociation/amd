@@ -3,7 +3,7 @@
 %define name		amd
 %define NAME		AMD
 %define version		2.2.0
-%define release		%mkrel 6
+%define release		%mkrel 7
 %define major		%{version}
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
