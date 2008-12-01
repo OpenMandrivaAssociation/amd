@@ -5,7 +5,7 @@
 
 Name:		amd
 Version:	2.2.0
-Release:	%mkrel 8
+Release:	%mkrel 9
 Summary:	Routines for permuting sparse matricies prior to factorization
 Group:		System/Libraries
 License:	LGPL
@@ -38,6 +38,7 @@ Summary:	C routines for permuting sparse matricies prior to factorization
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	suitesparse-common-devel
 Obsoletes:	%mklibname %{name} 1.2 -d
 Obsoletes:	%mklibname %{name} 2 -d
 Obsoletes:	%mklibname %{name} 2 -d -s
