@@ -1,18 +1,23 @@
-%define NAME AMD
-%define major %{version}
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
+%define epoch		0
 
-Name:		amd
-Version:	2.2.0
-Release:	%mkrel 9
+%define name		amd
+%define NAME 		AMD
+%define version		2.2.0
+%define release		%mkrel 10
+%define major 		%{version}
+%define libname 	%mklibname %{name} %{major}
+%define develname 	%mklibname %{name} -d
+
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+Epoch:		%{epoch}
 Summary:	Routines for permuting sparse matricies prior to factorization
 Group:		System/Libraries
 License:	LGPL
-Epoch:		0
 URL:		http://www.cise.ufl.edu/research/sparse/amd/
 Source0:	http://www.cise.ufl.edu/research/sparse/amd/%{NAME}-%{version}.tar.gz
-Source1:	http://www.cise.ufl.edu/research/sparse/UFconfig/UFconfig-3.1.0.tar.gz
+Source1:	http://www.cise.ufl.edu/research/sparse/UFconfig/UFconfig-3.2.0.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
@@ -23,8 +28,7 @@ Cholesky factorization (or LU factorization with diagonal pivoting).
 Summary:	Library of routines for permuting sparse matricies prior to factorization
 Group:		System/Libraries
 Provides:	%{libname} = %{epoch}:%{version}-%{release}
-# (tpg) kill suitesparse amd library
-Obsoletes:	%{mklibname amd 2}
+Obsoletes:	%mklibname %{name} 2
 
 %description -n %{libname}
 AMD provides a set of routines for permuting sparse matricies prior to
@@ -36,9 +40,9 @@ linked against %{NAME}.
 %package -n %{develname}
 Summary:	C routines for permuting sparse matricies prior to factorization
 Group:		Development/C
+Requires:	suitesparse-common-devel >= 3.0.0
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Requires:	suitesparse-common-devel
 Obsoletes:	%mklibname %{name} 1.2 -d
 Obsoletes:	%mklibname %{name} 2 -d
 Obsoletes:	%mklibname %{name} 2 -d -s
