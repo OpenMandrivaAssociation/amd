@@ -3,7 +3,7 @@
 %define name		amd
 %define NAME 		AMD
 %define version		2.2.0
-%define release		%mkrel 10
+%define release		%mkrel 11
 %define major 		%{version}
 %define libname 	%mklibname %{name} %{major}
 %define develname 	%mklibname %{name} -d
@@ -17,8 +17,8 @@ Group:		System/Libraries
 License:	LGPL
 URL:		http://www.cise.ufl.edu/research/sparse/amd/
 Source0:	http://www.cise.ufl.edu/research/sparse/amd/%{NAME}-%{version}.tar.gz
-Source1:	http://www.cise.ufl.edu/research/sparse/UFconfig/UFconfig-3.2.0.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires:	suitesparse-common-devel >= 3.2.0-2
 
 %description
 AMD provides a set of routines for permuting sparse matricies prior to
@@ -55,14 +55,15 @@ This package contains the files needed to develop applications that
 use %{NAME}.
 
 %prep
-%setup -q -c 
-%setup -q -c -a 0 -a 1
-%setup -q -D -T -n %{name}-%{version}/%{NAME}
+%setup -q -c
+%setup -q -D -n %{name}-%{version}/%{NAME}
+mkdir ../UFconfig
+ln -sf %{_includedir}/suitesparse/UFconfig.* ../UFconfig
 
 %build
 pushd Lib
-    %make -f GNUmakefile CC=%__cc CFLAGS="%{optflags} -fPIC"
-    %__cc -shared -Wl,-soname,libamd.so.%{major} -o lib%{name}.so.%{version} -lm *.o
+    %make -f GNUmakefile CC=%__cc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
+    %__cc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
 popd
 
 %install
