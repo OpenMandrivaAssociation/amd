@@ -5,7 +5,7 @@
 
 Name:		amd
 Version:	2.3.1
-Release:	2
+Release:	3
 Epoch:		1
 Summary:	Routines for permuting sparse matricies prior to factorization
 Group:		System/Libraries
@@ -57,7 +57,7 @@ ln -sf %{_includedir}/suitesparse/SuiteSparse_config.* ../SuiteSparse_config
 cd %{NAME}
 pushd Lib
     %make -f GNUmakefile CC=gcc CFLAGS="%{optflags} -fPIC -I%{_includedir}/suitesparse" INC=
-    gcc -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
+    gcc %{ldflags} -shared -Wl,-soname,lib%{name}.so.%{major} -o lib%{name}.so.%{version} -lm *.o
 popd
 
 %install
